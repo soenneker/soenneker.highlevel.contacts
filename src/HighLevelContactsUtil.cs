@@ -8,9 +8,9 @@ using Soenneker.Extensions.ValueTask;
 using Soenneker.Extensions.Task;
 using Soenneker.HighLevel.ClientUtil.Abstract;
 using Soenneker.HighLevel.OpenApiClient;
-using Soenneker.HighLevel.OpenApiClient.Contacts.Contacts.Search;
 using Soenneker.HighLevel.OpenApiClient.Models;
 using System.Linq;
+using Soenneker.HighLevel.OpenApiClient.Contacts.Search;
 
 namespace Soenneker.HighLevel.Contacts;
 
@@ -39,7 +39,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
 
         HighLevelOpenApiClient client = await _highLevelClient.Get(apiKey, cancellationToken).NoSync();
 
-        return await client.Contacts.Contacts.Upsert.PostAsync(contact, config => { }, cancellationToken).NoSync();
+        return await client.Contacts.Upsert.PostAsync(contact, config => { }, cancellationToken).NoSync();
     }
 
     public async ValueTask<SearchPostResponse?> Search(string apiKey, SearchBodyV2DTO searchBody, CancellationToken cancellationToken = default)
@@ -49,7 +49,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
 
         HighLevelOpenApiClient client = await _highLevelClient.Get(apiKey, cancellationToken).NoSync();
 
-        return await client.Contacts.Contacts.Search.PostAsync(searchBody, config => { }, cancellationToken).NoSync();
+        return await client.Contacts.Search.PostAsync(searchBody, config => { }, cancellationToken).NoSync();
     }
 
     public async ValueTask<ContactsByIdSuccessfulResponseDto?> GetById(string apiKey, string contactId, CancellationToken cancellationToken = default)
@@ -59,7 +59,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
 
         HighLevelOpenApiClient client = await _highLevelClient.Get(apiKey, cancellationToken).NoSync();
 
-        return await client.Contacts.Contacts[contactId].GetAsync(config => { }, cancellationToken).NoSync();
+        return await client.Contacts[contactId].GetAsync(config => { }, cancellationToken).NoSync();
     }
 
     public async ValueTask<GetContectByIdSchema?> GetByEmail(string apiKey, string email, string locationId, CancellationToken cancellationToken = default)
@@ -105,7 +105,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
 
         HighLevelOpenApiClient client = await _highLevelClient.Get(apiKey, cancellationToken).NoSync();
 
-        return await client.Contacts.Contacts[contactId].PutAsync(updateDto, config => { }, cancellationToken).NoSync();
+        return await client.Contacts[contactId].PutAsync(updateDto, config => { }, cancellationToken).NoSync();
     }
 
     public async ValueTask<DeleteContactsSuccessfulResponseDto?> Delete(string apiKey, string contactId, CancellationToken cancellationToken = default)
@@ -115,6 +115,6 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
 
         HighLevelOpenApiClient client = await _highLevelClient.Get(apiKey, cancellationToken).NoSync();
 
-        return await client.Contacts.Contacts[contactId].DeleteAsync(config => { }, cancellationToken).NoSync();
+        return await client.Contacts[contactId].DeleteAsync(config => { }, cancellationToken).NoSync();
     }
 }

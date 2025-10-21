@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Soenneker.HighLevel.OpenApiClient.Contacts.Contacts.Search;
+using Soenneker.HighLevel.OpenApiClient.Contacts.Search;
 using Soenneker.HighLevel.OpenApiClient.Models;
 
 namespace Soenneker.HighLevel.Contacts.Abstract;
