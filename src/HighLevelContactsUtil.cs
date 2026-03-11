@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Soenneker.HighLevel.Contacts.Abstract;
 using System.Threading.Tasks;
 using System.Threading;
@@ -42,7 +42,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
         return await client.Contacts.Upsert.PostAsync(contact, config => { }, cancellationToken).NoSync();
     }
 
-    public async ValueTask<SearchPostResponse?> Search(string apiKey, SearchBodyV2DTO searchBody, CancellationToken cancellationToken = default)
+    public async ValueTask<SearchPostResponse?> Search(string apiKey, SearchPostRequestBody searchBody, CancellationToken cancellationToken = default)
     {
         if (_log)
             _logger.LogDebug("Searching for contacts in High Level...");
@@ -69,7 +69,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
         if (_log)
             _logger.LogDebug("Getting contact from High Level with email ({Email}) in location ({LocationId})...", email, locationId);
 
-        var searchBody = new SearchBodyV2DTO
+        var searchBody = new SearchPostRequestBody
         {
             AdditionalData =
             {

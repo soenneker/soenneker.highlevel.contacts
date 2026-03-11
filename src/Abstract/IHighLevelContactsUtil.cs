@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Soenneker.HighLevel.OpenApiClient.Contacts.Search;
 using Soenneker.HighLevel.OpenApiClient.Models;
@@ -26,7 +26,7 @@ public interface IHighLevelContactsUtil
     /// <param name="searchBody">The search criteria containing filters for the contact search.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>A task that represents the asynchronous search operation. The task result contains the search response, or null if the operation fails.</returns>
-    ValueTask<SearchPostResponse?> Search(string apiKey, SearchBodyV2DTO searchBody, CancellationToken cancellationToken = default);
+    ValueTask<SearchPostResponse?> Search(string apiKey, SearchPostRequestBody searchBody, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a single contact by ID.
