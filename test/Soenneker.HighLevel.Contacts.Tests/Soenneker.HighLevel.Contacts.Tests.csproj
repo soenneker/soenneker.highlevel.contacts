@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Soenneker.HighLevel.Contacts.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.HighLevel.Contacts\Soenneker.HighLevel.Contacts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
