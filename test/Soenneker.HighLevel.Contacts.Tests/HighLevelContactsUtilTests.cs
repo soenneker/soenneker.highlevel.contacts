@@ -1,20 +1,19 @@
-﻿using Soenneker.HighLevel.Contacts.Abstract;
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.HighLevel.Contacts.Abstract;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.HighLevel.Contacts.Tests;
 
-[Collection("Collection")]
-public sealed class HighLevelContactsUtilTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public sealed class HighLevelContactsUtilTests : HostedUnitTest
 {
     private readonly IHighLevelContactsUtil _util;
 
-    public HighLevelContactsUtilTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public HighLevelContactsUtilTests(Host host) : base(host)
     {
         _util = Resolve<IHighLevelContactsUtil>(true);
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
