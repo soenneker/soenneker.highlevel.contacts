@@ -10,7 +10,6 @@ using Soenneker.HighLevel.ClientUtil.Abstract;
 using Soenneker.HighLevel.OpenApiClient;
 using Soenneker.HighLevel.OpenApiClient.Models;
 using System.Linq;
-using Soenneker.HighLevel.OpenApiClient.Contacts.Search;
 
 namespace Soenneker.HighLevel.Contacts;
 
@@ -42,7 +41,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
         return await client.Contacts.Upsert.PostAsync(contact, config => { }, cancellationToken).NoSync();
     }
 
-    public async ValueTask<SearchPostResponse?> Search(string apiKey, SearchPostRequestBody searchBody, CancellationToken cancellationToken = default)
+    public async ValueTask<DefaultResponse?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody, CancellationToken cancellationToken = default)
     {
         if (_log)
             _logger.LogDebug("Searching for contacts in High Level...");
@@ -69,7 +68,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
         if (_log)
             _logger.LogDebug("Getting contact from High Level with email ({Email}) in location ({LocationId})...", email, locationId);
 
-        var searchBody = new SearchPostRequestBody
+        var searchBody = new ContactsSearchContactsAdvancedRequest
         {
             AdditionalData =
             {
@@ -79,7 +78,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
             }
         };
 
-        SearchPostResponse? response = await Search(apiKey, searchBody, cancellationToken).NoSync();
+        DefaultResponse? response = await Search(apiKey, searchBody, cancellationToken).NoSync();
 
         if (response?.AdditionalData == null)
             return null;
