@@ -25,7 +25,7 @@ public interface IHighLevelContactsUtil
     /// <param name="searchBody">The search criteria containing filters for the contact search.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>A task that represents the asynchronous search operation. The task result contains the search response, or null if the operation fails.</returns>
-    ValueTask<DefaultResponse?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody,
+    ValueTask<DefaultResponseResponseJson12?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody,
         CancellationToken cancellationToken = default);
 
     /// <summary>
