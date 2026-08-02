@@ -41,7 +41,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
         return await client.Contacts.Upsert.PostAsync(contact, config => { }, cancellationToken).NoSync();
     }
 
-    public async ValueTask<DefaultResponseResponseJson12?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody, CancellationToken cancellationToken = default)
+    public async ValueTask<ContactsSearchContactsAdvanced201Response?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody, CancellationToken cancellationToken = default)
     {
         if (_log)
             _logger.LogDebug("Searching for contacts in High Level...");
@@ -78,7 +78,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
             }
         };
 
-        DefaultResponseResponseJson12? response = await Search(apiKey, searchBody, cancellationToken).NoSync();
+        ContactsSearchContactsAdvanced201Response? response = await Search(apiKey, searchBody, cancellationToken).NoSync();
 
         if (response?.AdditionalData == null)
             return null;
