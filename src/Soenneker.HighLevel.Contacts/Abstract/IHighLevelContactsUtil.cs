@@ -25,7 +25,7 @@ public interface IHighLevelContactsUtil
     /// <param name="searchBody">The search criteria containing filters for the contact search.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>A task that represents the asynchronous search operation. The task result contains the search response, or null if the operation fails.</returns>
-    ValueTask<ContactsSearchContactsAdvanced201Response?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody,
+    ValueTask<ContactsSearchSuccessfulResponseDto?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -45,7 +45,7 @@ public interface IHighLevelContactsUtil
     /// <param name="locationId">The location ID to search within.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the contact if found, or null if not found.</returns>
-    ValueTask<GetContectByIdSchema?> GetByEmail(string apiKey, string email, string locationId, CancellationToken cancellationToken = default);
+    ValueTask<ContactsSearchSchema?> GetByEmail(string apiKey, string email, string locationId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates an existing contact by ID.

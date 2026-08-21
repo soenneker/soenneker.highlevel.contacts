@@ -1,5 +1,9 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Kiota.Abstractions.Serialization;
+using Microsoft.Kiota.Serialization.Json;
 using Soenneker.HighLevel.Contacts.Abstract;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +13,6 @@ using Soenneker.Extensions.Task;
 using Soenneker.HighLevel.ClientUtil.Abstract;
 using Soenneker.HighLevel.OpenApiClient;
 using Soenneker.HighLevel.OpenApiClient.Models;
-using System.Linq;
 
 namespace Soenneker.HighLevel.Contacts;
 
@@ -41,14 +44,25 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
         return await client.Contacts.Upsert.PostAsync(contact, config => { }, cancellationToken).NoSync();
     }
 
-    public async ValueTask<ContactsSearchContactsAdvanced201Response?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody, CancellationToken cancellationToken = default)
+    public async ValueTask<ContactsSearchSuccessfulResponseDto?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody,
+        CancellationToken cancellationToken = default)
     {
         if (_log)
             _logger.LogDebug("Searching for contacts in High Level...");
 
         HighLevelOpenApiClient client = await _highLevelClient.Get(apiKey, cancellationToken).NoSync();
 
-        return await client.Contacts.Search.PostAsync(searchBody, config => { }, cancellationToken).NoSync();
+        Stream? response = await client.Contacts.Search.PostAsync(searchBody, config => { }, cancellationToken).NoSync();
+
+        if (response is null)
+            return null;
+
+        await using (response)
+        {
+            var factory = new JsonParseNodeFactory();
+            IParseNode root = await factory.GetRootParseNodeAsync("application/json", response, cancellationToken).NoSync();
+            return root.GetObjectValue(ContactsSearchSuccessfulResponseDto.CreateFromDiscriminatorValue);
+        }
     }
 
     public async ValueTask<ContactsByIdSuccessfulResponseDto?> GetById(string apiKey, string contactId, CancellationToken cancellationToken = default)
@@ -61,7 +75,7 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
         return await client.Contacts[contactId].GetAsync(config => { }, cancellationToken).NoSync();
     }
 
-    public async ValueTask<GetContectByIdSchema?> GetByEmail(string apiKey, string email, string locationId, CancellationToken cancellationToken = default)
+    public async ValueTask<ContactsSearchSchema?> GetByEmail(string apiKey, string email, string locationId, CancellationToken cancellationToken = default)
     {
         email = email.ToLowerInvariantFast();
 
@@ -78,20 +92,8 @@ public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
             }
         };
 
-        ContactsSearchContactsAdvanced201Response? response = await Search(apiKey, searchBody, cancellationToken).NoSync();
-
-        if (response?.AdditionalData == null)
-            return null;
-
-        // Try to extract contacts from response
-        if (response.AdditionalData.TryGetValue("contacts", out object? contactsObj) && contactsObj is System.Collections.IEnumerable contacts)
-        {
-            var firstContact = contacts.Cast<object>().FirstOrDefault();
-            if (firstContact is GetContectByIdSchema contact)
-                return contact;
-        }
-
-        return null;
+        ContactsSearchSuccessfulResponseDto? response = await Search(apiKey, searchBody, cancellationToken).NoSync();
+        return response?.Contacts?.FirstOrDefault();
     }
 
     public async ValueTask<UpdateContactsSuccessfulResponseDto?> Update(string apiKey, string contactId, UpdateContactDto updateDto,
