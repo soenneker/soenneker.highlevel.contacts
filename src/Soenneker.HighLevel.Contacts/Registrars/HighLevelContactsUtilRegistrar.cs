@@ -6,7 +6,7 @@ using Soenneker.HighLevel.Contacts.Abstract;
 namespace Soenneker.HighLevel.Contacts.Registrars;
 
 /// <summary>
-/// A .NET typesafe implementation of High Level's contact API
+/// Registers typed HighLevel contact operations.
 /// </summary>
 public static class HighLevelContactsUtilRegistrar
 {

@@ -5,7 +5,7 @@ using Soenneker.HighLevel.OpenApiClient.Models;
 namespace Soenneker.HighLevel.Contacts.Abstract;
 
 /// <summary>
-/// A .NET typesafe implementation of High Level's contact API
+/// Provides typed HighLevel contact operations, including upsert, search, lookup, update, and delete.
 /// </summary>
 public interface IHighLevelContactsUtil
 {
@@ -14,8 +14,8 @@ public interface IHighLevelContactsUtil
     /// </summary>
     /// <param name="apiKey">The API key for authentication.</param>
     /// <param name="contact">The contact data to upsert.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the upsert response, or null if the operation fails.</returns>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The response body, or <see langword="null"/> when the API returns no body.</returns>
     ValueTask<UpsertContactsSuccessfulResponseDto?> Upsert(string apiKey, UpsertContactDto contact, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -23,8 +23,8 @@ public interface IHighLevelContactsUtil
     /// </summary>
     /// <param name="apiKey">The API key for authentication.</param>
     /// <param name="searchBody">The search criteria containing filters for the contact search.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>A task that represents the asynchronous search operation. The task result contains the search response, or null if the operation fails.</returns>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The search response, or <see langword="null"/> when the API returns no body.</returns>
     ValueTask<ContactsSearchSuccessfulResponseDto?> Search(string apiKey, ContactsSearchContactsAdvancedRequest searchBody,
         CancellationToken cancellationToken = default);
 
@@ -33,8 +33,8 @@ public interface IHighLevelContactsUtil
     /// </summary>
     /// <param name="apiKey">The API key for authentication.</param>
     /// <param name="contactId">The unique identifier of the contact to retrieve.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the contact if found, or null if not found.</returns>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The response body, or <see langword="null"/> when the API returns no body.</returns>
     ValueTask<ContactsByIdSuccessfulResponseDto?> GetById(string apiKey, string contactId, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -43,8 +43,8 @@ public interface IHighLevelContactsUtil
     /// <param name="apiKey">The API key for authentication.</param>
     /// <param name="email">The email address of the contact to retrieve.</param>
     /// <param name="locationId">The location ID to search within.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the contact if found, or null if not found.</returns>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The first matching contact, or <see langword="null"/> when none is returned.</returns>
     ValueTask<ContactsSearchSchema?> GetByEmail(string apiKey, string email, string locationId, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -53,8 +53,8 @@ public interface IHighLevelContactsUtil
     /// <param name="apiKey">The API key for authentication.</param>
     /// <param name="contactId">The unique identifier of the contact to update.</param>
     /// <param name="updateDto">The contact data to update.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the update response, or null if the operation fails.</returns>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The response body, or <see langword="null"/> when the API returns no body.</returns>
     ValueTask<UpdateContactsSuccessfulResponseDto?> Update(string apiKey, string contactId, UpdateContactDto updateDto, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -62,7 +62,7 @@ public interface IHighLevelContactsUtil
     /// </summary>
     /// <param name="apiKey">The API key for authentication.</param>
     /// <param name="contactId">The unique identifier of the contact to delete.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>A task that represents the asynchronous delete operation. The task result contains the delete response, or null if the operation fails.</returns>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The response body, or <see langword="null"/> when the API returns no body.</returns>
     ValueTask<DeleteContactsSuccessfulResponseDto?> Delete(string apiKey, string contactId, CancellationToken cancellationToken = default);
 }
