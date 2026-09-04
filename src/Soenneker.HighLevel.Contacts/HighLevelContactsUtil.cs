@@ -16,6 +16,7 @@ using Soenneker.HighLevel.OpenApiClient.Models;
 
 namespace Soenneker.HighLevel.Contacts;
 
+/// <inheritdoc cref="IHighLevelContactsUtil" />
 public sealed class HighLevelContactsUtil : IHighLevelContactsUtil
 {
     private readonly IHighLevelClientUtil _highLevelClient;
