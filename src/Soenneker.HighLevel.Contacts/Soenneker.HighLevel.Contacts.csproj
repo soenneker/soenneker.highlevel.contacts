@@ -46,13 +46,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.HighLevel.ClientUtil" Version="4.0.363" />
+        <PackageReference Include="Soenneker.HighLevel.ClientUtil" Version="4.0.364" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.13" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.13" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.13" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.13" />
-        <PackageReference Include="Soenneker.Extensions.String" Version="4.0.790" />
+        <PackageReference Include="Soenneker.Extensions.String" Version="4.0.791" />
     </ItemGroup>
 </Project>
