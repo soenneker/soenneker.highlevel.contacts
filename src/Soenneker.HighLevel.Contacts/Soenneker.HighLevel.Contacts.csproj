@@ -47,7 +47,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.HighLevel.ClientUtil" Version="11.0.380" />
+        <PackageReference Include="Soenneker.HighLevel.ClientUtil" Version="11.0.381" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="11.0.0-rc.3.26522.148" />
